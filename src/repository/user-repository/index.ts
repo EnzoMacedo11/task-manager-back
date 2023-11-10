@@ -22,13 +22,37 @@ export async function CreateUser(name:string,enrolment:string,password:string,ac
         companyCode
     }})
   
-
     return ({user:user.name,enrolment:user.enrolment,company:user.companyCode})
 
 }
 
-export async function GetUser(enrolment:string,companyCode:number) {
-    const user = await prisma.user.findFirst({where:{enrolment,companyCode},include:{Group:true,Links:true}})
+export async function Login(companyCode:number,enrolment:string,password:string) {
+    
+    
+    const company = await prisma.company.findUnique({where:{code:companyCode},include:{User:true}})
+    console.log(company)
+    if(!company){
+        throw new Error("Código de empresa errado")
+    }
+    const user = await prisma.user.findFirst({where:{enrolment}})
+    if(!user){
+        throw new Error("Usuário e/ou senha incorreto(s)")
+    }
+    const userInCompany = company.User.find((u)=> u.enrolment === enrolment)
+    if(!userInCompany){
+        throw new Error("Usuário não pertence a essa empresa")
+    }
+    if(user){
+        const passwordMatch = await bcrypt.compare(password,user.password)
+        if(passwordMatch){
+            return({id:user.id,name:user.name,enrolment:user.enrolment,admin:user.admin,active:user.active})
+        }
+    }
+    
+}
+
+export async function GetUser(id:number) {
+    const user = await prisma.user.findUnique({where:{id},include:{Group:true,Links:true}})
    if(!user){
     throw new Error("Não existe esse usuário nessa empresa")
    }
@@ -47,7 +71,7 @@ export async function GetUser(enrolment:string,companyCode:number) {
 
 
 const userRepository = {
-    CreateUser,GetUser
+    CreateUser,GetUser,Login
 }
 
 export default userRepository

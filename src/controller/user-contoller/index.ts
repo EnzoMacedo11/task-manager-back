@@ -14,11 +14,26 @@ export async function CreateUser(req:Request,res:Response) {
     }
 }
 
-export async function GetUser(req:Request,res:Response) {
-    const {enrolment,companycode} = req.headers;
+
+export async function Login(req:Request,res:Response) {
+    const {companyCode,enrolment,password} = req.body;
+  
 
     try{
-        const result = await userService.GetUser(String(enrolment),Number(companycode))
+        const result = await userService.Login(companyCode,enrolment,password)
+        res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}
+
+export async function GetUser(req:Request,res:Response) {
+    const {id} = req.headers;
+
+    try{
+        const result = await userService.GetUser(Number(id))
         res.status(httpStatus.OK).send(result)
     }
     catch(error){

@@ -5,15 +5,21 @@ export async function CreateUser(name:string,enrolment:string,password:string,ac
     return userRepository.CreateUser(name,enrolment,password,active,admin,companyCode)
 
 }
-export async function GetUser(enrolment:string,companyCode:number) {
+export async function GetUser(id:number) {
 
-    return userRepository.GetUser(enrolment,companyCode)
+    return userRepository.GetUser(id)
+
+}
+
+export async function Login(companyCode:number,enrolment:string,password:string) {
+
+    return userRepository.Login(companyCode,enrolment,password)
 
 }
 
 
 const userService = {
-    CreateUser,GetUser
+    CreateUser,GetUser,Login
 };
 
 export default userService
