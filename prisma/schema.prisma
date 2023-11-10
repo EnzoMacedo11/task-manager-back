@@ -45,7 +45,7 @@ model Links{
     link String
     imageUrl String
     description String
-    Group Group[]
+    Group Group @relation(fields: [groupId],references: [id])
     groupId Int
     User User[]
     createdAt DateTime @default(now())

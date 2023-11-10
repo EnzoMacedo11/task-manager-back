@@ -30,7 +30,8 @@ export async function GetAll(userId:number){
 
     if(user.admin === true && user.active ===true ){
       return await prisma.company.findMany({include:{
-        User:true
+        User:true,
+        Group:true,
       }})
 
     }else{
@@ -52,7 +53,8 @@ export async function GetByCode(userId:number,code:number){
       return await prisma.company.findUnique({
         where: { code },
         include: {
-          User: true
+          User: true,
+          Group:true
         },
       })
 
