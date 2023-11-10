@@ -6,8 +6,25 @@ export async function CreateLink(link:string,imageUrl:string,description:string,
 }
 
 
+export async function RemoveLink(id:number) {
+    return linkRepository.RemoveLink(id)
+
+}
+export async function AddLinkToUser(id:number,userId:number) {
+    return linkRepository.AddLinkToUser(id,userId)
+
+}
+
+export async function RemoveLinkToUser(id:number,userId:number) {
+    return linkRepository.RemoveLinkToUser(id,userId)
+
+}
+
+
+
+
 const linkService = {
-    CreateLink
+    CreateLink,RemoveLink,AddLinkToUser,RemoveLinkToUser
 }
 
 export default linkService

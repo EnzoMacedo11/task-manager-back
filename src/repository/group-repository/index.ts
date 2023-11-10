@@ -19,12 +19,12 @@ export async function CreateGroup(name:string,companyId:number) {
 
 export async function GetGroupById(id:number) {
 
-    const group = await prisma.group.findUnique({where:{id},include:{User:true}})
+    const group = await prisma.group.findUnique({where:{id},include:{User:true,Links:true}})
     console.log(group)
     const company = await prisma.company.findUnique({where:{id:group.id}})
     console.log(company)
 
-    return({id:group.id,name:group.name,companyCode:company.code,users:group.User})
+    return({id:group.id,name:group.name,companyCode:company.code,users:group.User,links:group.Links})
     
 }
 
