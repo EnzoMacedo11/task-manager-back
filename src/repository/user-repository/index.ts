@@ -81,12 +81,58 @@ export async function GetUsersbyCompanyCode(code:number) {
    }
 }
 
+export async function AddUserToGroup(userId:number,groupId:number) {
+    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true}})
+    const user = await prisma.user.findUnique({where:{id:userId}})
 
+    const userInGroup = group.User.find(u => u.id === userId)
+    if(userInGroup){
+        throw new Error("Usuário já pertence ao grupo")
+    }
+    await prisma.group.update({
+        where: { id: groupId },
+        data: {
+            User: {
+                connect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+
+    return (`Usuário ${user.name} adicionado ao grupo ${group.name}`)
+
+
+}
+
+export async function RemoveUserToGroup(userId:number,groupId:number) {
+    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true}})
+    const user = await prisma.user.findUnique({where:{id:userId}})
+
+    const userInGroup = group.User.find(u => u.id === userId)
+    if(!userInGroup){
+        throw new Error("Usuário não pertence ao grupo")
+    }
+    await prisma.group.update({
+        where: { id: groupId },
+        data: {
+            User: {
+                disconnect: {
+                    id: userId,
+                },
+            },
+        },
+    });
+
+    return (`Usuário ${user.name} removido do grupo ${group.name}`)
+
+
+}
 
 
 
 const userRepository = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup
 }
 
 export default userRepository

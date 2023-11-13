@@ -54,3 +54,28 @@ export async function GetUsersbyCompanyCode(req:Request,res:Response) {
     }
     
 }
+export async function AddUserToGroup(req:Request,res:Response) {
+    const {userId,groupId} = req.body;
+   
+    try{
+        const result = await userService.AddUserToGroup(Number(userId),groupId)
+        res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}
+
+export async function RemoveUserToGroup(req:Request,res:Response) {
+    const {userId,groupId} = req.body;
+   
+    try{
+        const result = await userService.RemoveUserToGroup(Number(userId),groupId)
+        res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}

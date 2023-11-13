@@ -23,9 +23,24 @@ export async function GetUsersbyCompanyCode(code:number) {
 
 }
 
+export async function AddUserToGroup(userId:number,groupId:number) {
+    console.log(userId)
+    console.log(groupId)
+    return userRepository.AddUserToGroup(userId,groupId)
+
+}
+
+
+export async function RemoveUserToGroup(userId:number,groupId:number) {
+    console.log(userId)
+    console.log(groupId)
+    return userRepository.RemoveUserToGroup(userId,groupId)
+
+}
+
 
 const userService = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup
 };
 
 export default userService
