@@ -17,9 +17,15 @@ export async function Login(companyCode:number,enrolment:string,password:string)
 
 }
 
+export async function GetUsersbyCompanyCode(code:number) {
+
+    return userRepository.GetUsersbyCompanyCode(code)
+
+}
+
 
 const userService = {
-    CreateUser,GetUser,Login
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode
 };
 
 export default userService

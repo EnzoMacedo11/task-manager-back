@@ -41,3 +41,16 @@ export async function GetUser(req:Request,res:Response) {
     }
     
 }
+
+export async function GetUsersbyCompanyCode(req:Request,res:Response) {
+    const {code} = req.headers;
+
+    try{
+        const result = await userService.GetUsersbyCompanyCode(Number(code))
+        res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}

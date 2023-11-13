@@ -58,11 +58,26 @@ export async function GetUser(id:number) {
    }
    else{
     return {
+        id:user.id,
         name:user.name,
+        active:user.active,
+        admin:user.admin,
         enrolment:user.enrolment,
+        company:user.companyCode,
         groups:user.Group,
         links:user.Links
     }
+   }
+}
+
+export async function GetUsersbyCompanyCode(code:number) {
+    const company = await prisma.company.findUnique({where:{code},include:{User:true,Group:true}})
+   if(!company){
+    throw new Error("Empresa não cadastrada")
+   }
+   else{
+    return {users:company.User, companyName:company.name, companyGroups:company.Group}
+    
    }
 }
 
@@ -71,7 +86,7 @@ export async function GetUser(id:number) {
 
 
 const userRepository = {
-    CreateUser,GetUser,Login
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode
 }
 
 export default userRepository
