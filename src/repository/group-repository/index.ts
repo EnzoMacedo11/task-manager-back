@@ -1,8 +1,15 @@
 import { prisma } from "../../config";
 
 export async function CreateGroup(name:string,companyId:number) {
-    const company = await prisma.company.findUnique({where:{id:companyId}})
-    console.log(company)
+    const company = await prisma.company.findUnique({where:{id:companyId},include:{Group:true}})
+    console.log("compa",company)
+
+    const groupInCompany = company.Group.find((g)=> g.name == name)
+    console.log("groupInCompanuy",groupInCompany)
+    if(groupInCompany){
+        throw new Error("Grupo já criado")
+    }
+
     if(company){
         const result = await prisma.group.create({data:{
             name,

@@ -22,7 +22,7 @@ export async function CreateUser(name:string,enrolment:string,password:string,ac
         companyCode
     }})
   
-    return ({user:user.name,enrolment:user.enrolment,company:user.companyCode})
+    return ({name:user.name,enrolment:user.enrolment,company:user.companyCode})
 
 }
 

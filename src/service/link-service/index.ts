@@ -20,11 +20,16 @@ export async function RemoveLinkToUser(id:number,userId:number) {
 
 }
 
+export async function GetAll(id:number) {
+    return linkRepository.GetAll(id)
+
+}
+
 
 
 
 const linkService = {
-    CreateLink,RemoveLink,AddLinkToUser,RemoveLinkToUser
+    CreateLink,RemoveLink,AddLinkToUser,RemoveLinkToUser,GetAll
 }
 
 export default linkService

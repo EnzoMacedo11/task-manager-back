@@ -6,7 +6,7 @@ export async function CreateUser(req:Request,res:Response) {
     const {name,enrolment,password,active,admin,companyCode} = req.body;
 
     try{
-         const result = await userService.CreateUser(name,enrolment,password,active,admin,companyCode)
+         const result = await userService.CreateUser(name,enrolment,password,active,admin,Number(companyCode))
         return res.status(httpStatus.OK).send(result)
         }
     catch(error){

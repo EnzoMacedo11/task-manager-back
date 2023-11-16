@@ -16,7 +16,7 @@ export async function CreateLink(link:string,imageUrl:string,description:string,
         groupId
     }})
     console.log(result)
-    return (`Link id:${result.id} criado com sucesso`)
+    return (result)
 }
 
 export async function RemoveLink(id: number) {
@@ -98,8 +98,20 @@ export async function RemoveLinkToUser(id:number,userId:number) {
 }
 
 
+export async function GetAll(id:number){
+    const links = await prisma.links.findMany({where:{groupId:id}})
+    if(!links){
+        throw new Error("Nenhum link encontrado")
+    }else{
+        return links
+    }
+}
+
+
+
+
 const linkRepository = {
-    CreateLink,RemoveLink,AddLinkToUser,RemoveLinkToUser
+    CreateLink,RemoveLink,AddLinkToUser,RemoveLinkToUser,GetAll
 }
 
 export default linkRepository

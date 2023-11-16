@@ -6,7 +6,7 @@ export async function CreateGroup(req:Request,res:Response){
     const {name, companyId} = req.body;
 
     try{
-        const result = await groupService.CreateGroup(name,companyId)
+        const result = await groupService.CreateGroup(name,Number(companyId))
         return res.status(httpStatus.OK).send(result)
     }catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)

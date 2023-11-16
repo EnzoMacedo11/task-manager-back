@@ -7,6 +7,12 @@ export async function CreateCompany(name:string,code:number,userId:number){
         throw new Error("Usuário não cadastrado")
     }
 
+    const company = await prisma.company.findUnique({where:{code}})
+    console.log("cc",company)
+    if(company){
+      throw new Error("Este código já está sendo utilizado")
+    }
+
     if(user.admin === true && user.active === true ){
       return  await prisma.company.create({data:{
             name,

@@ -4,9 +4,10 @@ import companyService from "../../service/company-service";
 
 export async function CreateCompany(req:Request,res:Response){
     const {name, code, userId} = req.body;
+    console.log(code);
 
     try{
-        const result = await companyService.CreateCompany(name,code,userId)
+        const result = await companyService.CreateCompany(name,Number(code),Number(userId))
         return res.status(httpStatus.OK).send(result)
     }catch(error){
        return res.status(httpStatus.BAD_REQUEST).send(error.message)

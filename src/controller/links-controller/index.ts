@@ -45,3 +45,16 @@ export  async function RemoveLinkToUser(req:Request,res:Response){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)
     }
 }
+
+
+export  async function GetAll(req:Request,res:Response){
+    const{id} = req.headers
+    console.log(id)
+    
+    try{
+        const result = await linkService.GetAll(Number(id))
+        return res.status(httpStatus.OK).send(result)
+    }catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+}

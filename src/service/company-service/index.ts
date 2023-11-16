@@ -1,6 +1,7 @@
 import companyRepository from "../../repository/company-repository"
 
 export async function CreateCompany(name:string,code:number,userId:number) {
+    console.log(userId)
     return companyRepository.CreateCompany(name,code,userId)
 }
 export async function GetAll(userId:number) {
