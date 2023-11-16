@@ -27,10 +27,10 @@ export async function CreateUser(name:string,enrolment:string,password:string,ac
 }
 
 export async function Login(companyCode:number,enrolment:string,password:string) {
-    
-    
+  
+  
     const company = await prisma.company.findUnique({where:{code:companyCode},include:{User:true}})
-    console.log(company)
+    //console.log(company)  
     if(!company){
         throw new Error("Código de empresa errado")
     }
@@ -45,6 +45,7 @@ export async function Login(companyCode:number,enrolment:string,password:string)
     if(user){
         const passwordMatch = await bcrypt.compare(password,user.password)
         if(passwordMatch){
+            console.log(user)
             return({id:user.id,name:user.name,enrolment:user.enrolment,admin:user.admin,active:user.active})
         }
     }
@@ -82,8 +83,8 @@ export async function GetUsersbyCompanyCode(code:number) {
 }
 
 export async function AddUserToGroup(userId:number,groupId:number) {
-    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true}})
-    const user = await prisma.user.findUnique({where:{id:userId}})
+    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true,Links:true}})
+    const user = await prisma.user.findUnique({where:{id:userId},include:{Links:true}})
 
     const userInGroup = group.User.find(u => u.id === userId)
     if(userInGroup){
@@ -106,8 +107,10 @@ export async function AddUserToGroup(userId:number,groupId:number) {
 }
 
 export async function RemoveUserToGroup(userId:number,groupId:number) {
-    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true}})
-    const user = await prisma.user.findUnique({where:{id:userId}})
+    const group = await prisma.group.findUnique({where:{id:groupId},include:{User:true,Links:true}})
+    const user = await prisma.user.findUnique({where:{id:userId},include:{Links:true}})
+    console.log(group)
+    console.log(user)
 
     const userInGroup = group.User.find(u => u.id === userId)
     if(!userInGroup){
@@ -123,7 +126,21 @@ export async function RemoveUserToGroup(userId:number,groupId:number) {
             },
         },
     });
+  
+    const updatedUserLinks = user.Links.filter((link) => link.groupId !== groupId);
 
+  
+    const linkIds = updatedUserLinks.map((link) => ({ id: link.id }));
+
+
+    await prisma.user.update({
+        where: { id: userId },
+        data: {
+            Links: {
+                set: linkIds,
+            },
+        },
+    });
     return (`Usuário ${user.name} removido do grupo ${group.name}`)
 
 

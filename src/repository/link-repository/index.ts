@@ -51,7 +51,8 @@ export async function AddLinkToUser(id:number,userId:number) {
     }
 
     const updatedUser = await prisma.user.update({
-        where: { id: userId },
+        where: { id: userId }
+        ,include:{Links:true},
         data: {
           Links: {
             connect: { id: link.id }
@@ -60,7 +61,7 @@ export async function AddLinkToUser(id:number,userId:number) {
       });
 
       if(updatedUser){
-        return (`Link id:${id} adicionado ao usuário: ${user.name}`)
+        return link
       }
 
 }

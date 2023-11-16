@@ -20,8 +20,8 @@ export async function Login(req:Request,res:Response) {
   
 
     try{
-        const result = await userService.Login(companyCode,enrolment,password)
-        res.status(httpStatus.OK).send(result)
+        const result = await userService.Login(Number(companyCode),enrolment,password)
+        return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)

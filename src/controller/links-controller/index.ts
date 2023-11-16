@@ -28,7 +28,7 @@ export  async function AddLinkToUser(req:Request,res:Response){
     const{id,userId} = req.body
     
     try{
-        const result = await linkService.AddLinkToUser(id,userId)
+        const result = await linkService.AddLinkToUser(Number(id),Number(userId))
         return res.status(httpStatus.OK).send(result)
     }catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)

@@ -81,10 +81,10 @@ export async function AddUser(enrolment:string,companyCode:number,id:number) {
 export async function RemoveUser(enrolment:string,companyCode:number,id:number) {
     const company = await prisma.company.findUnique({where:{code:companyCode}})
     //console.log("company",company)
-    const user = await prisma.user.findFirst({where:{enrolment,companyCode}})
-    //console.log("user",user)
-    const group = await prisma.group.findUnique({where:{id},include:{User:true}})
-    //console.log("group",group)
+    const user = await prisma.user.findFirst({where:{enrolment,companyCode},include:{Links:true}})
+    console.log("user",user)
+    const group = await prisma.group.findUnique({where:{id},include:{User:true,Links:true}})
+    console.log("group",group)
     if(!user){
         throw new Error("Usuário não Encontrado")
     }
