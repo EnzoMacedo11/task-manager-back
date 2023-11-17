@@ -24,6 +24,20 @@ export async function CreateGroup(name:string,companyId:number) {
     
 }
 
+export async function DeleteGroup(id:number){
+    const group = await prisma.group.findUnique({where:{id},include:{Links:true}})
+    if(group){
+        const deleteLinksinGroup = await prisma.links.deleteMany({where:{groupId:group.id}})
+        const deleteGroup = await prisma.group.delete({where:{id}})
+        return deleteGroup
+    }else{
+        throw new Error(`Grupo não existe`)
+    }
+
+
+
+}
+
 export async function GetGroupById(id:number) {
 
     const group = await prisma.group.findUnique({where:{id},include:{User:true,Links:true}})
@@ -119,7 +133,7 @@ export async function RemoveUser(enrolment:string,companyCode:number,id:number) 
 
 
 const groupRepository = {
-    CreateGroup,GetGroupById,AddUser,RemoveUser
+    CreateGroup,GetGroupById,AddUser,RemoveUser,DeleteGroup
 }
 
 export default groupRepository

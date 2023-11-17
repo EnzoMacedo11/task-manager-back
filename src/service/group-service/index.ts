@@ -5,6 +5,11 @@ export async function CreateGroup(name:string,companyId:number) {
 
 }
 
+export async function DeleteGroup(id:number) {
+    return groupRepository.DeleteGroup(id)
+
+}
+
 export async function GetGroupById(id:number) {
     return groupRepository.GetGroupById(id)
 
@@ -22,7 +27,7 @@ export async function RemoveUser(enrolment:string,companyCode:number,id:number) 
 
 
 const groupService={
-    CreateGroup,GetGroupById,AddUser,RemoveUser
+    CreateGroup,GetGroupById,AddUser,RemoveUser,DeleteGroup
 }
 
 export default groupService

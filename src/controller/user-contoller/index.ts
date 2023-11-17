@@ -14,6 +14,19 @@ export async function CreateUser(req:Request,res:Response) {
     }
 }
 
+export async function DeleteUser(req:Request,res:Response) {
+    const {id}= req.body;
+    console.log(id)
+
+    try{
+         const result = await userService.DeleteUser(Number(id))
+        return res.status(httpStatus.OK).send(result)
+        }
+    catch(error){
+        return res.status(httpStatus.NOT_FOUND).send(error.message)
+    }
+}
+
 
 export async function Login(req:Request,res:Response) {
     const {companyCode,enrolment,password} = req.body;

@@ -15,6 +15,7 @@ export  async function CreateLink(req:Request,res:Response){
 
 export async function RemoveLink(req:Request,res:Response){
     const{id} = req.body
+    console.log("id",id)
     
     try{
         const result = await linkService.RemoveLink(id)

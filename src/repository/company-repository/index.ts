@@ -26,6 +26,29 @@ export async function CreateCompany(name:string,code:number,userId:number){
 
 }
 
+export async function DeleteCompany(id:number){
+  const company = await prisma.company.findUnique({where:{id},include:{Group:true,User:true}})
+  if(company.User){
+    const deleteUsers = await prisma.user.deleteMany({where:{companyCode:company.code}})
+  }
+  if(company.Group){
+    const groups = await prisma.group.findMany({where:{companyId:id},include:{Links:true}})
+    for(let i = 0;i<groups.length;i++){
+      const deleteLinks = await prisma.links.deleteMany({where:{groupId:groups[i].id}})
+      const deleteGroup = await prisma.group.delete({where:{id:groups[i].id}})
+    }
+  }
+  const DeleteCompany = await prisma.company.delete({where:{id}})
+  return DeleteCompany
+
+
+  if(!company){
+    throw new Error("Empresa não encontrada")
+  }
+
+
+}
+
 export async function GetAll(userId:number){
     console.log(userId)
     const user = await prisma.user.findUnique({where:{id:userId}})
@@ -73,7 +96,7 @@ export async function GetByCode(userId:number,code:number){
 
 
 const companyRepository ={
-    CreateCompany,GetAll,GetByCode
+    CreateCompany,GetAll,GetByCode,DeleteCompany
 
 }
 

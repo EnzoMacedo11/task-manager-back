@@ -38,9 +38,15 @@ export async function RemoveUserToGroup(userId:number,groupId:number) {
 
 }
 
+export async function DeleteUser(id:number) {
+   
+    return userRepository.DeleteUser(id)
+
+}
+
 
 const userService = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser
 };
 
 export default userService

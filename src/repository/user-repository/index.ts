@@ -146,10 +146,22 @@ export async function RemoveUserToGroup(userId:number,groupId:number) {
 
 }
 
+export async function DeleteUser(id:number){
+    const user = await prisma.user.findUnique({where:{id}})
+    if(user){
+        const deleteUser = await prisma.user.delete({where:{id}})
+    }
+    else{
+        throw new Error("Usuário não existe")
+    }
+    return(`Usuário ${user.name} deletado`)
+    
+}
+
 
 
 const userRepository = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser
 }
 
 export default userRepository

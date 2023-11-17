@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { AddUserToGroup, CreateUser, GetUser, GetUsersbyCompanyCode, Login, RemoveUserToGroup } from "../../controller/user-contoller";
+import { AddUserToGroup, CreateUser, DeleteUser, GetUser, GetUsersbyCompanyCode, Login, RemoveUserToGroup } from "../../controller/user-contoller";
 
 const userRouter = Router();
 
 userRouter.post("/create",CreateUser)
+userRouter.post("/remove",DeleteUser)
 userRouter.post("/login",Login)
 userRouter.get("/getuser",GetUser)
 userRouter.get("/getusersbycompanycode",GetUsersbyCompanyCode)

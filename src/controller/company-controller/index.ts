@@ -14,6 +14,18 @@ export async function CreateCompany(req:Request,res:Response){
     }
 
 }
+export async function DeleteCompany(req:Request,res:Response){
+   const {id} = req.body
+    console.log(id);
+
+    try{
+        const result = await companyService.DeleteCompany(Number(id))
+        return res.status(httpStatus.OK).send(result)
+    }catch(error){
+       return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+
+}
 
 
 export async function GetAll(req:Request,res:Response){
