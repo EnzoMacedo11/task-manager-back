@@ -31,6 +31,11 @@ export async function DeleteCompany(id:number){
   if(company.User){
     const deleteUsers = await prisma.user.deleteMany({where:{companyCode:company.code}})
   }
+
+  if(!company){
+    throw new Error("Empresa não encontrada")
+  }
+
   if(company.Group){
     const groups = await prisma.group.findMany({where:{companyId:id},include:{Links:true}})
     for(let i = 0;i<groups.length;i++){
@@ -42,9 +47,6 @@ export async function DeleteCompany(id:number){
   return DeleteCompany
 
 
-  if(!company){
-    throw new Error("Empresa não encontrada")
-  }
 
 
 }
