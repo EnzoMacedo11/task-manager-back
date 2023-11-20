@@ -22,7 +22,7 @@ export async function CreateUser(name:string,enrolment:string,password:string,ac
         companyCode
     }})
   
-    return ({name:user.name,enrolment:user.enrolment,company:user.companyCode})
+    return ({id:user.id,name:user.name,enrolment:user.enrolment,company:user.companyCode,active:user.active})
 
 }
 
@@ -158,10 +158,50 @@ export async function DeleteUser(id:number){
     
 }
 
+export async function ActiveUser(id:number){
+    const user = await prisma.user.findUnique({where:{id}})
+    console.log(user)
+    if(!user){
+        throw new Error("Usuário não encontrado")
+    }
+
+    if(user.active === false){
+        const newUser =  await prisma.user.update({
+            where: { id },
+            data: {
+                active:true
+            },
+        });
+        return newUser
+    }
+ 
+    
+}
+
+export async function DisableUser(id:number){
+    const user = await prisma.user.findUnique({where:{id}})
+    console.log(user)
+    if(!user){
+        throw new Error("Usuário não encontrado")
+    }
+    if(user.active === true){
+        const newUser = await prisma.user.update({
+            where: { id },
+            data: {
+                active:false
+            },
+        });
+        return newUser
+    }
+  
+}
+
 
 
 const userRepository = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser,ActiveUser,DisableUser
 }
+
+
 
 export default userRepository

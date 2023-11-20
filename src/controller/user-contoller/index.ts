@@ -47,7 +47,7 @@ export async function GetUser(req:Request,res:Response) {
 
     try{
         const result = await userService.GetUser(Number(id))
-        res.status(httpStatus.OK).send(result)
+        return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)
@@ -60,7 +60,7 @@ export async function GetUsersbyCompanyCode(req:Request,res:Response) {
 
     try{
         const result = await userService.GetUsersbyCompanyCode(Number(code))
-        res.status(httpStatus.OK).send(result)
+        return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)
@@ -72,7 +72,7 @@ export async function AddUserToGroup(req:Request,res:Response) {
    
     try{
         const result = await userService.AddUserToGroup(Number(userId),groupId)
-        res.status(httpStatus.OK).send(result)
+       return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)
@@ -85,7 +85,33 @@ export async function RemoveUserToGroup(req:Request,res:Response) {
    
     try{
         const result = await userService.RemoveUserToGroup(Number(userId),groupId)
-        res.status(httpStatus.OK).send(result)
+       return res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}
+
+export async function ActiveUser(req:Request,res:Response) {
+    const {id} = req.body;
+   
+    try{
+        const result = await userService.ActiveUser(Number(id))
+       return  res.status(httpStatus.OK).send(result)
+    }
+    catch(error){
+        return res.status(httpStatus.BAD_REQUEST).send(error.message)
+    }
+    
+}
+
+export async function DisableUser(req:Request,res:Response) {
+    const {id} = req.body;
+   
+    try{
+        const result = await userService.DisableUser(Number(id))
+        return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)

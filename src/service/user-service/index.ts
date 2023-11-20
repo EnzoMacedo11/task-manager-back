@@ -44,9 +44,21 @@ export async function DeleteUser(id:number) {
 
 }
 
+export async function ActiveUser(id:number) {
+   
+    return userRepository.ActiveUser(id)
+
+}
+
+export async function DisableUser(id:number) {
+   
+    return userRepository.DisableUser(id)
+
+}
+
 
 const userService = {
-    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser
+    CreateUser,GetUser,Login,GetUsersbyCompanyCode,AddUserToGroup,RemoveUserToGroup,DeleteUser,ActiveUser,DisableUser
 };
 
 export default userService
