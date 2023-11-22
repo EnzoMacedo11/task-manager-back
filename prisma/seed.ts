@@ -8,7 +8,6 @@ async function main(){
     const hashedPassword2 = await bcrypt.hash("180211", 10);
     const hashedPassword3 = await bcrypt.hash("123456789", 10);
 
-
     await prisma.company.create({data:{
         name:"Admin",
         code:123,
@@ -46,3 +45,12 @@ async function main(){
         ]
     })
 }
+
+main()
+  .then(() => {
+    console.log("Registro Feito");
+  })
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
