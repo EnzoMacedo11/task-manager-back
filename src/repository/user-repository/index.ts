@@ -30,7 +30,7 @@ export async function Login(companyCode:number,enrolment:string,password:string)
   
   
     const company = await prisma.company.findUnique({where:{code:companyCode},include:{User:true}})
-    //console.log(company)  
+    
     if(!company){
         throw new Error("Código de empresa errado")
     }
