@@ -44,15 +44,15 @@ export async function DeleteUser(id:number) {
 
 }
 
-export async function ActiveUser(id:number) {
+export async function ActiveUser(id:number,userId:number) {
    
-    return userRepository.ActiveUser(id)
+    return userRepository.ActiveUser(id,userId)
 
 }
 
-export async function DisableUser(id:number) {
+export async function DisableUser(id:number,userId:number) {
    
-    return userRepository.DisableUser(id)
+    return userRepository.DisableUser(id,userId)
 
 }
 

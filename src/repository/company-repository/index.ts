@@ -26,8 +26,15 @@ export async function CreateCompany(name:string,code:number,userId:number){
 
 }
 
-export async function DeleteCompany(id:number){
+export async function DeleteCompany(id:number,userId:number){
   const company = await prisma.company.findUnique({where:{id},include:{Group:true,User:true}})
+
+
+  const userInCompany = company.User.find((u)=> u.id === userId)
+  if(userInCompany){
+    throw new Error("Está empresa não pode ser deletada por você")
+  }
+
   if(company.User){
     const deleteUsers = await prisma.user.deleteMany({where:{companyCode:company.code}})
   }

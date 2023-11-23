@@ -158,7 +158,11 @@ export async function DeleteUser(id:number){
     
 }
 
-export async function ActiveUser(id:number){
+export async function ActiveUser(id:number,userId:number){
+    if(id === userId){
+        throw new Error("Você não pode se Ativar")
+    }
+    
     const user = await prisma.user.findUnique({where:{id}})
     console.log(user)
     if(!user){
@@ -178,7 +182,10 @@ export async function ActiveUser(id:number){
     
 }
 
-export async function DisableUser(id:number){
+export async function DisableUser(id:number,userId:number){
+    if(id === userId){
+        throw new Error("Você não pode se Desativar")
+    }
     const user = await prisma.user.findUnique({where:{id}})
     console.log(user)
     if(!user){

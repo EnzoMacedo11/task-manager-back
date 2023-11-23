@@ -5,9 +5,9 @@ export async function CreateCompany(name:string,code:number,userId:number) {
     return companyRepository.CreateCompany(name,code,userId)
 }
 
-export async function DeleteCompany(id:number) {
+export async function DeleteCompany(id:number,userId:number) {
     console.log(id)
-    return companyRepository.DeleteCompany(id)
+    return companyRepository.DeleteCompany(id,userId)
 }
 export async function GetAll(userId:number) {
     return companyRepository.GetAll(userId)

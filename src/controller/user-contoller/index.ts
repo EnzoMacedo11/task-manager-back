@@ -94,11 +94,11 @@ export async function RemoveUserToGroup(req:Request,res:Response) {
 }
 
 export async function ActiveUser(req:Request,res:Response) {
-    const {id} = req.body;
+    const {id,userId} = req.body;
    
     try{
-        const result = await userService.ActiveUser(Number(id))
-       return  res.status(httpStatus.OK).send(result)
+        const result = await userService.ActiveUser(Number(id),Number(userId))
+        return res.status(httpStatus.OK).send(result)
     }
     catch(error){
         return res.status(httpStatus.BAD_REQUEST).send(error.message)
@@ -107,10 +107,10 @@ export async function ActiveUser(req:Request,res:Response) {
 }
 
 export async function DisableUser(req:Request,res:Response) {
-    const {id} = req.body;
+    const {id,userId} = req.body;
    
     try{
-        const result = await userService.DisableUser(Number(id))
+        const result = await userService.DisableUser(Number(id),Number(userId))
         return res.status(httpStatus.OK).send(result)
     }
     catch(error){
